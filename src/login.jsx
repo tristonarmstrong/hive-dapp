@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { user, useUserContext } from './user';
+import { useUserContext } from './user';
 import './App.css'
 
 

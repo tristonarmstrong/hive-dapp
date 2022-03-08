@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react'
 
 
 function ChatMessage({ message, sender }) {
-  const [messageClass, setMessageClass] = useState()
+  // const [messageClass, setMessageClass] = useState()
   const [avatar, setAvatar] = useState()
   const [ts, setTs] = useState()
 
   useEffect(() => {
     if (!message || !sender) return;
 
-    const messageClass = message.who === sender ? 'sent' : 'received';
-    setMessageClass(messageClass)
+    // const messageClass = message.who === sender ? 'sent' : 'received';
+    // setMessageClass(messageClass)
 
     const avatar = `https://avatars.dicebear.com/api/initials/${message.who}.svg`;
     setAvatar(avatar)

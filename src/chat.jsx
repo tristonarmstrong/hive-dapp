@@ -1,9 +1,8 @@
 
 import GUN from 'gun';
-import { useEffect, useReducer, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useUserContext } from './user'
 import SEA from 'gun/sea'
-import ChatMessage from './chatmessage'
 import Login from './login'
 import './App.css'
 import Header from './header'
@@ -15,7 +14,7 @@ const db = GUN({
 })
 
 function Chat() {
-  const { user, username, signout, room, setRoom } = useUserContext()
+  const { user, username, room, setRoom } = useUserContext()
   const [newMessage, setNewMessage] = useState()
   const [messages, setMessages] = useState([])
   const [canAutoScroll, setCanAutoScroll] = useState(true);
@@ -32,10 +31,6 @@ function Chat() {
     setUnreadMessages(false)
   }
 
-  function watchScroll(e) {
-    setCanAutoScroll((e.target.scrollTop || Infinity) > lastScrollTop)
-    lastScrollTop.current = e.target.scrollTop;
-  }
 
   useEffect(() => {
     getMessages()
