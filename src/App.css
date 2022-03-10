@@ -1,39 +1,69 @@
+:root {
+  --primary: #4d7aff;
+  --primary_dark: #3655b3;
+  --secondary: #d3deff;
+  --secondary_dark: #a6bcff;
+  --complimentary: #ff5151;
+}
+
 html {
   margin: 0;
   padding: 0;
   height: 100vh;
-  background-color: #a3cbff;
+  background-color: var(--secondary);
   overflow-y: hidden;
 }
 
 .App {
   text-align: center;
-  background-color: #a3cbff;
+  background-color: var(--secondary);
   height: 100vh;
 }
 
 .login-container {
   display: flex;
-  justify-content: flex-end;
-  align-content: center;
   align-items: center;
-  height: 100vh;
-  flex: 1;
+  flex: 1 1;
 }
 
+
+.login-box-container {
+  background-color: white;
+  height: 100%;
+  flex: 2.5 1;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.login-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.login-header > h1, .login-header > p {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+.login-header > p {
+  font-size: 14px;
+  color: gray;
+  margin-top: 5px;
+}
 
 .login-box {
   display: flex;
   flex-direction: column;
-  background-color: #fff6;
-  border-radius: 10px 0px 0px 10px;
-  height: 100vh;
   justify-content: center;
-  padding: 10px 200px;
+
 }
 
 .login-label {
-  font-weight: bold;
+  font-weight: normal;
   font-size: 14px;
   color: #0009;
 }
@@ -46,20 +76,23 @@ html {
 }
 
 .login-button {
-  margin: 10px 0px;
+  margin: 5px 0px;
   border: 0;
-  background-color: #fffc;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 4px;
+  background-color: var(--primary);
+  color: white;
+  font-weight: bold;
 }
 
 .login-button:hover {
   cursor: pointer;
-  background-color: #ffff;
+  background-color: var(--primary_dark);
 }
 
 .login-title-container {
   margin:  0px auto;
+  flex: 3;
 }
 
 .login-title {
@@ -97,11 +130,116 @@ color: #0009;
 }
 
 .sidebar-container {
-  width: 200px;
-  background-color: #79a8e6;
-  padding-top: 50px;
   display: flex;
   flex-direction: column;
+  background-color: white;
+  width: 200px;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+}
+
+.main-container {
+  background-color: #f4f6fc;
+  flex: 4 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  flex: 1;
+}
+
+.main-body-left {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-body-right {
+  background-color: white;
+  flex: 1;
+  min-width: 130px;
+  max-width: 150px;
+}
+
+.main-body-chat {
+  flex: 6;
+}
+
+.main-body-input {
+  background-color: white;
+  min-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-body-input > input {
+  width: 80%;
+  background-color: #f4f6fc;
+  border: 0;
+  padding: 6px 5px;
+  border-radius: 4px;
+  font-size: 10px;
+  height: 14px;
+  margin-right: 5px;
+}
+
+.main-body-input > button {
+  background-color: var(--secondary);
+  border: 0;
+  border-radius: 4px;
+  padding: 3px;
+  width: 20px;
+  height: 25px;
+}
+
+.main-body-input > button:hover {
+  background-color: var(--secondary_dark);
+  cursor: pointer;
+}
+
+.main-navbar {
+  width: 100%;
+  height: 40px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.main-navbar-logo > image {
+  background-color: gray;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.main-navbar-logo > p {
+  font-weight: bold;
+}
+
+.main-navbar-user {
+  display: flex;
+  align-items: center;
+  margin-right: 40px;
+}
+
+.main-navbar-user > image {
+  background-color: gray;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  border-radius: 50%;
 }
 
 .sidebar-link {
@@ -113,6 +251,43 @@ color: #0009;
   font-weight: bold;
 }
 
+.sidebar-head {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  padding: 40px 0 10px;
+}
+
+.sidebar-head > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.sidebar-head > div > image {
+  background-color: lightgray;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.sidebar-head > div > div > h6 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.sidebar-head > div > div > p {
+  margin: 0;
+  font-size: 10px;
+  color: gray;
+  font-weight: lighter;
+}
+
 .sidebar-link:hover {
   background-color: #0009;
   cursor: pointer;
@@ -122,6 +297,54 @@ color: #0009;
   background-color: #0009;
   cursor: pointer;
   color: white;
+}
+
+.sidebar-channels {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding-left: 20px;
+}
+
+.sidebar-channels > details > summary {
+  margin: 10px 0 0 0;
+  font-weight: normal;
+  color: gray;
+  font-size: 14px;
+}
+
+.sidebar-channels > details > div {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.sidebar-channels > details > div > p {
+  font-size: 12px;
+  margin: 2px 0;
+  padding: 5px;
+}
+
+.sidebar-channels > details > div > p:hover {
+  background-color: var(--secondary);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.sidebar-dms {
+ display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding-left: 20px; 
+}
+
+.sidebar-dms > details > summary {
+  margin: 10px 0 0 0;
+  font-weight: normal;
+  color: gray;
+  font-size: 14px;
 }
 
 .message-container {
@@ -222,8 +445,57 @@ color: #0009;
   background-color: #5ab2ff99;
 }
 
+.form-input > input {
+  margin: 10px;
+  border: 1px solid #e6e6e6;
+  padding: 5px;
+  border-radius: 4px;
+  background-color: #f4f4f4;
+  margin-left: 0;
+  width: 95%;
+}
 
+.form-input > label {
+  font-weight: lighter;
+  font-size: 14px;
+  color: gray;
+  text-align: left;
+}
 
+.form-input {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+}
+
+.dm-card {
+  display: flex;
+  margin: 5px 0 5px 5px;
+  justify-content: start;
+  align-items: center;
+  padding: 5px;
+}
+
+.dm-card:hover {
+  background-color: var(--secondary);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.dm-card > image {
+  background-color: lightgray;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  margin-right: 5px;
+}
+
+.dm-card > h6 {
+  margin: 0;
+  font-weight: normal;
+}
 
 
 

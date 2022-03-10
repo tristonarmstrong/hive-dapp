@@ -3,7 +3,7 @@ import GUN from 'gun';
 import { useEffect, useState, useRef } from 'react';
 import { useUserContext } from './user'
 import SEA from 'gun/sea'
-import Login from './login'
+import Login from './login.tsx'
 import './App.css'
 import Header from './header'
 import ChatBox from './chat_box'
@@ -97,34 +97,95 @@ function Chat() {
 
   return (
     <div className='chat-container'>
+      
       {username && (
-        <div className='chat-body-container'>
-
+        <>
           <div className='sidebar-container'>
-            <button className={`sidebar-link ${room == 'devTeam' ? 'sidebar-link-selected' : ''}`} onClick={() => changeRoom('devTeam')}>devTeam</button>
-            <button className={`sidebar-link ${room == 'TestRoom1' ? 'sidebar-link-selected' : ''}`} onClick={() => changeRoom('TestRoom1')}>TestRoom</button>
-            <button className={`sidebar-link ${room == 'TestRoom2' ? 'sidebar-link-selected' : ''}`} onClick={() => changeRoom('TestRoom2')}>TestRoom2</button>
-            <button className={`sidebar-link ${room == 'TestRoom3' ? 'sidebar-link-selected' : ''}`} onClick={() => changeRoom('TestRoom3')}>TestRoom3</button>
-            <button className={`sidebar-link ${room == 'TestRoom4' ? 'sidebar-link-selected' : ''}`} onClick={() => changeRoom('TestRoom4')}>TestRoom4</button>
-            <button className={`sidebar-link ${room == 'TestRoom5' ? 'sidebar-link-selected' : ''}`} onClick={() => changeRoom('TestRoom5')}>TestRoom5</button>
+            <div className='sidebar-head'>
+              <div>
+                <image />
+                <div>
+                  <h6>Welcome</h6>
+                  <p>{username}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className='sidebar-channels'>
+              <details open>
+                <summary>Channels</summary>
+                <div>
+                  <p>DevTeam</p>
+                  <p>General</p>
+                  <p>Random</p>
+                  <p>SalesTeam</p>
+                  <p>GamerTalk</p>
+                </div>
+              </details>
+            </div>
+
+            <div className='sidebar-dms'>
+            <details open>
+              <summary>Direct Messages</summary>
+              <div className='sidebar-dms-list'>
+
+                <div className='dm-card'>
+                  <image />
+                  <h6>Lisa F. Bogar</h6>
+                </div>
+                <div className='dm-card'>
+                  <image />
+                  <h6>Lisa F. Bogar</h6>
+                </div>
+                <div className='dm-card'>
+                  <image />
+                  <h6>Lisa F. Bogar</h6>
+                </div>
+                <div className='dm-card'>
+                  <image />
+                  <h6>Lisa F. Bogar</h6>
+                </div>
+
+              </div>
+            </details>
+            </div>
           </div>
 
-          <Header />
-          <ChatBox 
-            messages={messages} 
-            handleSubmit={handleSubmit} 
-            newMessage={newMessage}
-            setNewMessage={setNewMessage}
-          />
-        </div>
-      )}
+          <div className='main-container'>
+            <div className='main-navbar'>
+              <div className='main-navbar-logo'>
+                <image/>
+                <p>HIVE</p>
+              </div>
+              <div className='main-navbar-user'>
+                <image/>
+              </div>
+            </div>
 
-      {!canAutoScroll && (
-        <div class="scroll-button">
-          <button onClick={autoScroll}>
-            {unreadMessages ? "💬" : "👇"}
-          </button>
-        </div>
+            <div className='main-body'>
+              <div className='main-body-left'>
+                <div className='main-body-chat'>
+                  
+                </div>
+                <div className='main-body-input'>
+                  <input placeholder='Type message ...'/>
+                  <button onClick={()=>{}}>></button>
+                </div>
+              </div>
+              <div className='main-body-right'>
+                <div className='main-body-user-info'>
+                  
+                </div>
+                <div className='main-body-interaction-timeline'>
+                  
+                </div>
+                <div className='main-body-contact-info'>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
       )}
 
       {!username && <Login />}
