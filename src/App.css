@@ -144,6 +144,8 @@ color: #0009;
   width: 200px;
   overflow-y: scroll;
   scrollbar-width: thin;
+  box-shadow: 0px 0px 10px 2px #0000001a;
+  z-index: 2;
 }
 
 .main-container {
@@ -172,6 +174,8 @@ color: #0009;
   flex: 1;
   min-width: 130px;
   max-width: 150px;
+  box-shadow: 0px 0px 10px 2px #0000001a;
+  z-index: 0;
 }
 
 .main-body-chat {
@@ -221,11 +225,14 @@ color: #0009;
   background-color: white;
   display: flex;
   justify-content: space-between;
+  box-shadow: 0px 0px 10px 2px #0000001a;
+  z-index: 1;
 }
 
 .main-navbar-logo {
   display: flex;
   align-items: center;
+  padding-left: 20px;
 }
 
 .main-navbar-logo > img {
@@ -269,6 +276,7 @@ color: #0009;
   align-items: center;
   text-align: left;
   padding: 40px 0 10px;
+  outline: 1px solid #00000012;
 }
 
 .sidebar-head > div {
