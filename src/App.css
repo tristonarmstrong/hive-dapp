@@ -6,6 +6,13 @@
   --complimentary: #ff5151;
 }
 
+@font-face {
+  font-family: "Rubik";   /*Can be any text*/
+  src: local("Rubik-Regular"),
+    url("./fonts/Rubik/static/Rubik-Regular.ttf") format("truetype");
+}
+
+
 html {
   margin: 0;
   padding: 0;
@@ -18,6 +25,7 @@ html {
   text-align: center;
   background-color: var(--secondary);
   height: 100vh;
+  font-family: Rubik;
 }
 
 .login-container {
@@ -150,6 +158,7 @@ color: #0009;
   flex-direction: row;
   justify-content: end;
   flex: 1;
+  max-height: 100vh;
 }
 
 .main-body-left {
@@ -167,6 +176,8 @@ color: #0009;
 
 .main-body-chat {
   flex: 6;
+  overflow-y: scroll;
+  padding-bottom: 50px;
 }
 
 .main-body-input {
@@ -175,10 +186,12 @@ color: #0009;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: sticky;
+  bottom: 0;
 }
 
 .main-body-input > input {
-  width: 80%;
+  width: 90%;
   background-color: #f4f6fc;
   border: 0;
   padding: 6px 5px;
@@ -193,8 +206,8 @@ color: #0009;
   border: 0;
   border-radius: 4px;
   padding: 3px;
-  width: 20px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
 }
 
 .main-body-input > button:hover {
@@ -215,7 +228,7 @@ color: #0009;
   align-items: center;
 }
 
-.main-navbar-logo > image {
+.main-navbar-logo > img {
   background-color: gray;
   width: 20px;
   height: 20px;
@@ -234,7 +247,7 @@ color: #0009;
   margin-right: 40px;
 }
 
-.main-navbar-user > image {
+.main-navbar-user > img {
   background-color: gray;
   width: 30px;
   height: 30px;
@@ -266,7 +279,7 @@ color: #0009;
   margin-left: 20px;
 }
 
-.sidebar-head > div > image {
+.sidebar-head > div > img {
   background-color: lightgray;
   width: 20px;
   height: 20px;
@@ -483,7 +496,7 @@ color: #0009;
   border-radius: 4px;
 }
 
-.dm-card > image {
+.dm-card > img {
   background-color: lightgray;
   width: 20px;
   height: 20px;
@@ -497,9 +510,55 @@ color: #0009;
   font-weight: normal;
 }
 
+.message-card {
+  display: flex;
+  align-items: flex-end;
+  margin: 20px;
+}
 
+.message-card > img {
+  background-color: gray;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  box-shadow: 0px 5px 10px -5px #0003;
+  min-width: 30px;
+  min-height: 30px;
+}
 
+.message-card > view {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 90%;
+  margin: 0 10px;
+}
 
+.message-card > view > h4 {
+  margin: 0 0 5px 0;
+  font-size: 10px;
+  font-weight: normal;
+  color: gray;
+}
+
+.message-card > view > p {
+  margin: 0;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px -5px #0003;
+  font-size: 12px;
+  text-align: left;
+}
+
+.me {
+  flex-direction: row-reverse;
+}
+
+.me > view > p {
+  background-color: var(--primary);
+  color: whitesmoke;
+}
 
 
 

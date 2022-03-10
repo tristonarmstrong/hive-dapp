@@ -6,11 +6,11 @@ module.exports = {
   target: "web",
   mode: "development",
   output: {
-    path: path.resolve(\__dirname, "build"),
+    path: path.resolve("build"),
     filename: "bundle.js",
   },
   resolve: {
-    extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
+    extensions: [".js", ".jsx", ".json", ".ts", ".tsx", ".ttf"],
   },
   module: {
     rules: [
@@ -27,6 +27,10 @@ module.exports = {
         test: /\.css$/,
         loader: "css-loader",
       },
+      {
+        test: /\.(svg|eot|ttf|woff|woff2)$/,
+        loader:'file-loader'
+     }
     ],
   },
   plugins: [

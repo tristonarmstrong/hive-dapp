@@ -1,3 +1,4 @@
+import './fonts/Rubik/static/Rubik-Regular.ttf'
 import './App.css';
 import Chat from './chat'
 import UserContextProvider from './user';
