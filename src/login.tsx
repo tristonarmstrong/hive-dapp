@@ -27,7 +27,7 @@ function Login(): JSX.Element {
   return (
     <div className='login-container'>
       <div className='login-title-container'>
-        <h1 className='login-title'>HIVE</h1>
+        <img className='login-title' src='/HIVE_stack.png'/>
       </div>
 
       <div className='login-box-container'>

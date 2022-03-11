@@ -17,7 +17,7 @@ const db = GUN({
 })
 
 function Chat() {
-  const { user, username, room, setRoom } = useUserContext()
+  const { user, username, room, setRoom, signout } = useUserContext()
   const [newMessage, setNewMessage] = useState()
   const [messages, setMessages] = useState([])
   const [canAutoScroll, setCanAutoScroll] = useState(true);
@@ -157,10 +157,10 @@ function Chat() {
           <div className='main-container'>
             <div className='main-navbar'>
               <div className='main-navbar-logo'>
-                <img src={generate_image_url("HIVE")}/>
-                <p>HIVE</p>
+                <img src={'/HIVE_inline.png'} alt="LOGO"/>
               </div>
               <div className='main-navbar-user'>
+              <p style={{marginRight: 10, cursor: 'pointer'}} onClick={signout}>Sign Out</p>
                 <img src={generate_image_url(username)}/>
               </div>
             </div>

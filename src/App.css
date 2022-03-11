@@ -104,8 +104,7 @@ html {
 }
 
 .login-title {
-font-size: 80px;
-color: #0009;
+height: 30vw;
 }
 
 .chat-header {
@@ -236,12 +235,7 @@ color: #0009;
 }
 
 .main-navbar-logo > img {
-  background-color: gray;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  border-radius: 50%;
-  margin-right: 5px;
+  height: 25px;
 }
 
 .main-navbar-logo > p {
