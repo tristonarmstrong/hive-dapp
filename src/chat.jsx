@@ -8,8 +8,8 @@ import './App.css'
 import Header from './header'
 import ChatBox from './chat_box'
 import generate_image_url from './utils/generate_image_url'
-import { AiOutlineSend } from 'react-icons/ai'
 import {COLOR} from './constants/index.ts'
+import MessageInput from './components/MessageInput.tsx'
 
 const db = GUN({
   // peers: ['http://localhost:8000/gun'] // Put the relay node that you want here
@@ -79,19 +79,6 @@ function Chat() {
     }
   }
 
-  async function sendMessage() {
-    const secret = await SEA.encrypt(newMessage, '#foo');
-    const message = user.get('all').set({ what: secret });
-    const index = new Date().toISOString();
-    db.get(room).get(index).put(message);
-    setNewMessage('');
-    setCanAutoScroll(true);
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault()
-    sendMessage()
-  }
 
   function changeRoom(room) {
     setMessages([])
@@ -118,11 +105,11 @@ function Chat() {
               <details open>
                 <summary>Channels</summary>
                 <div>
-                  <p>DevTeam</p>
-                  <p>General</p>
-                  <p>Random</p>
-                  <p>SalesTeam</p>
-                  <p>GamerTalk</p>
+                  <p onClick={()=>changeRoom('devTeam')} className={`${room == 'devTeam' ? 'selected' : ''}`}>DevTeam</p>
+                  <p onClick={()=>changeRoom('general')} className={`${room == 'general' ? 'selected' : ''}`}>General</p>
+                  <p onClick={()=>changeRoom('random')} className={`${room == 'random' ? 'selected' : ''}`}>Random</p>
+                  <p onClick={()=>changeRoom('salesTeam')} className={`${room == 'salesTeam' ? 'selected' : ''}`}>SalesTeam</p>
+                  <p onClick={()=>changeRoom('gamerTalk')} className={`${room == 'gamerTalk' ? 'selected' : ''}`}>GamerTalk</p>
                 </div>
               </details>
             </div>
@@ -180,18 +167,19 @@ function Chat() {
                     )
                   })}
                 </div>
-                <div className='main-body-input'>
-                  <input placeholder='Type message ...' onChange={e=>setNewMessage(e.target.value)} value={newMessage}/>
-                  <button onClick={() => sendMessage()}><AiOutlineSend color={COLOR.primary} size={15}/></button>
-                </div>
+
+                <MessageInput/>
+
               </div>
               <div className='main-body-right'>
                 <div className='main-body-user-info'>
                   
                 </div>
+
                 <div className='main-body-interaction-timeline'>
                   
                 </div>
+
                 <div className='main-body-contact-info'>
                   
                 </div>
