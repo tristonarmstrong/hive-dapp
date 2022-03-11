@@ -10,181 +10,29 @@ import ChatBox from './chat_box'
 import generate_image_url from './utils/generate_image_url'
 import {COLOR} from './constants/index.ts'
 import MessageInput from './components/MessageInput.tsx'
+import Sidebar from './components/Sidebar'
+import Navbar from './components/Navbar'
+import MainBody from './components/MainBody'
 
-const db = GUN({
-  // peers: ['http://localhost:8000/gun'] // Put the relay node that you want here
-  peers: ['https://hive-relay.herokuapp.com/gun'] // Put the relay node that you want here
-})
 
 function Chat() {
   const { user, username, room, setRoom, signout } = useUserContext()
-  const [newMessage, setNewMessage] = useState()
-  const [messages, setMessages] = useState([])
   const [canAutoScroll, setCanAutoScroll] = useState(true);
   const [unreadMessages, setUnreadMessages] = useState(false);
   const scrollBottom = useRef()
   const lastScrollTop = useRef()
 
-  useEffect(() => {
-    canAutoScroll && autoScroll()
-  }, [canAutoScroll])
-
-  function autoScroll() {
-    setTimeout(() => scrollBottom.current?.scrollIntoView({ behavior: 'auto' }), 50);
-    setUnreadMessages(false)
-  }
-
-
-  useEffect(() => {
-    getMessages()
-  }, [room]);
-
-  function getMessages() {
-    var match = {
-      '.': {
-        '>': new Date(+new Date() - 1 * 1000 * 60 * 60 * 3).toISOString(), // find any indexed property larger ~3 hours ago
-      },
-      '-': 1, // filter in reverse
-    };
-
-
-    // Get Messages
-    db.get(room)
-      .map(match)
-      .once(parseMessage);
-  }
-
-  async function parseMessage(data, id) {
-    if (!data) return;
-    console.log("Data: ", data)
-
-    // Key for end-to-end encryption
-    const key = '#foo';
-
-    var message = {
-      // transform the data
-      who: await db.user(data).get('alias'), // a user might lie who they are! So let the user system detect whose data it is.
-      what: (await SEA.decrypt(data.what, key)) + '', // force decrypt as text.
-      when: GUN.state.is(data, 'what'), // get the internal timestamp for the what property.
-    };
-
-    if (!message.what) return;
-
-    setMessages(prevMessages => [...new Set([...prevMessages.slice(-100), message])].sort((a, b) => a.when - b.when))
-        
-    if (canAutoScroll) {
-      autoScroll();
-    } else {
-      setUnreadMessages(true)
-    }
-  }
-
-
-  function changeRoom(room) {
-    setMessages([])
-    setRoom(room)
-  }
 
   return (
     <div className='chat-container'>
       
       {username && (
         <>
-          <div className='sidebar-container'>
-            <div className='sidebar-head'>
-              <div>
-                <img src={generate_image_url(username)}/>
-                <div>
-                  <h6>Welcome</h6>
-                  <p>{username}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className='sidebar-channels'>
-              <details open>
-                <summary>Channels</summary>
-                <div>
-                  <p onClick={()=>changeRoom('devTeam')} className={`${room == 'devTeam' ? 'selected' : ''}`}>DevTeam</p>
-                  <p onClick={()=>changeRoom('general')} className={`${room == 'general' ? 'selected' : ''}`}>General</p>
-                  <p onClick={()=>changeRoom('random')} className={`${room == 'random' ? 'selected' : ''}`}>Random</p>
-                  <p onClick={()=>changeRoom('salesTeam')} className={`${room == 'salesTeam' ? 'selected' : ''}`}>SalesTeam</p>
-                  <p onClick={()=>changeRoom('gamerTalk')} className={`${room == 'gamerTalk' ? 'selected' : ''}`}>GamerTalk</p>
-                </div>
-              </details>
-            </div>
-
-            <div className='sidebar-dms'>
-              <details open>
-                <summary>Direct Messages</summary>
-                <div className='sidebar-dms-list'>
-
-                  <div className='dm-card'>
-                    <img src={generate_image_url('Lisa F. Bogar')}/>
-                    <h6>Lisa F. Bogar</h6>
-                  </div>
-                  <div className='dm-card'>
-                    <img src={generate_image_url('Francisco Rodriguez')}/>
-                    <h6>Francisco Rodriguez</h6>
-                  </div>
-                  <div className='dm-card'>
-                    <img src={generate_image_url('Ezekiel Munez')}/>
-                    <h6>Ezekiel Munez</h6>
-                  </div>
-                  <div className='dm-card'>
-                    <img src={generate_image_url('Milan Sachuetz')}/>
-                    <h6>Milan Sachuetz</h6>
-                  </div>
-
-                </div>
-              </details>
-            </div>
-          </div>
+          <Sidebar/>
 
           <div className='main-container'>
-            <div className='main-navbar'>
-              <div className='main-navbar-logo'>
-                <img src={'/HIVE_inline.png'} alt="LOGO"/>
-              </div>
-              <div className='main-navbar-user'>
-              <p style={{marginRight: 10, cursor: 'pointer'}} onClick={signout}>Sign Out</p>
-                <img src={generate_image_url(username)}/>
-              </div>
-            </div>
-
-            <div className='main-body'>
-              <div className='main-body-left'>
-                <div className='main-body-chat'>
-                  {messages?.map(message => {
-                    return (
-                      <div className={`message-card ${message.who == username ? 'me' : ''}`}>
-                        <img src={generate_image_url(message.who)}/>
-                        <view>
-                          <h4>{message.who}</h4>
-                          <p>{message.what}</p>
-                        </view>
-                      </div>
-                    )
-                  })}
-                </div>
-
-                <MessageInput/>
-
-              </div>
-              <div className='main-body-right'>
-                <div className='main-body-user-info'>
-                  
-                </div>
-
-                <div className='main-body-interaction-timeline'>
-                  
-                </div>
-
-                <div className='main-body-contact-info'>
-                  
-                </div>
-              </div>
-            </div>
+            <Navbar/>
+            <MainBody/>
           </div>
         </>
       )}
