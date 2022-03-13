@@ -1,12 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import generate_image_url from '../utils/generate_image_url'
-import { useUserContext } from '../user'
+import { useUserContext } from '../hooks/user'
 
 const Sidebar: () => JSX.Element = (): JSX.Element => {
-  const { username, setRoom, room } = useUserContext()
+  const { username, setChannel, channel, team, db } = useUserContext()
+  const [channels, setChannels] = useState([])
+  const [dms, setDms] = useState([])
 
-  function changeRoom(room) {
-    setRoom(room)
+  useEffect(() => {
+    team?.get('channels').map().once(c=> updateChannels(c.name))
+  }, [])
+
+  const updateChannels = (new_channel: string) => {
+    if (!new_channel) return;
+    if (channels.includes(new_channel)) return;
+    setChannels(prev => [...prev, new_channel])
+  }
+
+  function changeChannel(channel) {
+    setChannel(channel)
+  }
+
+  const createChannel = () => {
+    let chan: string = prompt("Name the channel")
+    let ref = db.get(chan).put({name: chan})
+    team.get('channels').set(ref)
+    setChannel(chan)
+  }
+
+  const createDm = () => {
+
   }
 
   return (
@@ -22,14 +45,16 @@ const Sidebar: () => JSX.Element = (): JSX.Element => {
       </div>
 
       <div className='sidebar-channels'>
+        <h2>{team._.get}</h2>
         <details open>
           <summary>Channels</summary>
           <div>
-            <p onClick={() => changeRoom('devTeam')} className={`${room == 'devTeam' ? 'selected' : ''}`}>DevTeam</p>
-            <p onClick={() => changeRoom('general')} className={`${room == 'general' ? 'selected' : ''}`}>General</p>
-            <p onClick={() => changeRoom('random')} className={`${room == 'random' ? 'selected' : ''}`}>Random</p>
-            <p onClick={() => changeRoom('salesTeam')} className={`${room == 'salesTeam' ? 'selected' : ''}`}>SalesTeam</p>
-            <p onClick={() => changeRoom('gamerTalk')} className={`${room == 'gamerTalk' ? 'selected' : ''}`}>GamerTalk</p>
+            {channels?.map((chan, i) => {
+              if (typeof chan !== 'string') return null;
+              return <p key={`channel:${i}`} onClick={() => changeChannel(chan)} className={`${channel == chan ? 'selected' : ''}`}>{chan}</p>
+            })}
+
+            <button onClick={createChannel} className='creator-button'>+ Create Channel</button>
           </div>
         </details>
       </div>
@@ -39,23 +64,16 @@ const Sidebar: () => JSX.Element = (): JSX.Element => {
           <summary>Direct Messages</summary>
           <div className='sidebar-dms-list'>
 
-            <div className='dm-card'>
-              <img src={generate_image_url('Lisa F. Bogar')} />
-              <h6>Lisa F. Bogar</h6>
-            </div>
-            <div className='dm-card'>
-              <img src={generate_image_url('Francisco Rodriguez')} />
-              <h6>Francisco Rodriguez</h6>
-            </div>
-            <div className='dm-card'>
-              <img src={generate_image_url('Ezekiel Munez')} />
-              <h6>Ezekiel Munez</h6>
-            </div>
-            <div className='dm-card'>
-              <img src={generate_image_url('Milan Sachuetz')} />
-              <h6>Milan Sachuetz</h6>
-            </div>
+            {dms?.map((dm, i) => {
+              return (
+                <div key={`dm:${i}`} className='dm-card'>
+                  <img src={generate_image_url(dm)} />
+                  <h6>{dm}</h6>
+                </div>
+              )
+            })}
 
+            <button onClick={createDm} className='creator-button'>+ Compose Message</button>
           </div>
         </details>
       </div>

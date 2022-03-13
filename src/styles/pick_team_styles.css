@@ -1,0 +1,129 @@
+.pick-container {
+  margin: auto;
+  background-color: white;
+  border-radius: 6px;
+  min-width: 400px;
+  max-width: 600px;
+  box-shadow: 0px 0px 10px 0 #00000024;
+}
+
+.pick-title {
+  text-align: left;
+  padding: 10px;
+  color: black;
+  font-weight: normal;
+  border-bottom: 1px solid lightgray;
+}
+
+.pick-teams_list {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.team_item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px 10px 20px;
+  align-items: center;
+  border-bottom: 1px solid var(--secondary);
+}
+
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.left > img {
+  width: auto;
+  height: 70px;
+  background-color: var(--secondary);
+  border-radius: 4px;
+  padding: 5px;
+  margin-right: 10px;
+}
+
+.left > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.left > div > h3 {
+  margin: 0;
+}
+
+.left > div > p {
+  margin: 0;
+  color: gray;
+  font-size: 12px;
+}
+
+.right {
+  height: 50px;
+  width: 100px;
+  background-color: var(--primary);
+  border: 0;
+  border-radius: 4px;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.right:hover {
+	background-color: var(--primary_dark);
+	color: white;
+}
+
+.pick-bottom {
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-top: 30px;
+  background-color: var(--primary_dark);
+}
+
+.pick-bottom > h4 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+}
+
+.pick-bottom > button {
+  background-color: var(--complimentary);
+  border: 1px solid var(--complimentary);
+  border-radius: 4px;
+  padding: 10px;
+  color: var(--primary_dark);
+  font-weight: bold;
+  cursor: pointer;
+  border: 1px solid var(--complimentary);
+}
+
+.pick-bottom > button:hover{
+	background-color: var(--primary_dark);
+	color: var(--complimentary);
+}
+
+.pick-welcome {
+  text-align: center;
+  margin: 0 auto;
+  font-size: 30px;
+}
+
+.pick-welcome-sub {
+  font-size: 18px;
+  margin: 0;
+  color: var(--primary_dark);
+  margin-bottom: 30px;
+}
+
+
+
+
+
+
+
+

@@ -1,5 +1,5 @@
 import React from 'react'
-import {useUserContext} from '../user'
+import {useUserContext} from '../hooks/user'
 
 const Navbar = () => {
 	const {username, signout} = useUserContext()

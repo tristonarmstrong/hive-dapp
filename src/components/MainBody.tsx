@@ -1,12 +1,12 @@
 import React from 'react'
-import { useUserContext } from '../user'
+import { useUserContext } from '../hooks/user'
 import GUN from 'gun'
 import SEA from 'gun/sea'
 import generate_image_url from '../utils/generate_image_url'
 import MessageInput from './MessageInput'
 
 function MainBody(): JSX.Element {
-	const { room, db, username } = useUserContext();
+	const { channel, db, username } = useUserContext();
 	const [newMessage, setNewMessage] = React.useState()
 	const [messages, setMessages] = React.useState([])
 
@@ -15,7 +15,7 @@ function MainBody(): JSX.Element {
 	React.useEffect(() => {
 		setMessages([])
 		getMessages();
-	}, [room]);
+	}, [channel]);
 
 
 	function getMessages(): void {
@@ -28,7 +28,7 @@ function MainBody(): JSX.Element {
 
 
 		// Get Messages
-		db.get(room)
+		db.get(channel)
 			.map(match)
 			.once(parseMessage);
 	}
@@ -36,7 +36,6 @@ function MainBody(): JSX.Element {
 	async function parseMessage(data: { what: any; }, id: any): Promise<void> {
 		if (!data)
 			return;
-		console.log("Data: ", data);
 
 		// Key for end-to-end encryption
 		const key: "#foo" = '#foo'; // to be update to something more realistic and dynamic

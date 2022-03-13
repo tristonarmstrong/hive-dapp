@@ -10,7 +10,8 @@ const UserContextProvider = (props) => {
 	const [db, setDb] = useState()
 	const [user, setUser] = useState()
 	const [username, setUserName] = useState('')
-	const [room, setRoom] = useState('devTeam')
+	const [channel, setChannel] = useState()
+	const [team, setTeam] = useState()
 
 	useEffect(() => {
 		setDb(GUN({
@@ -28,27 +29,59 @@ const UserContextProvider = (props) => {
 	useEffect(() => {
 		if (!user) return;
 
-		user.get('alias').on(v => setUserName(v))
+		user.get('alias').on(v => setUserName(v));
 
-		db.on('auth', async (event) => {
-			const alias = await user.get('alias'); // username string
-			setUserName(alias);
-
-			console.log(`signed in as ${alias}`);
-		});
-
+		db.on('auth', async (event) => setUserName(await user.get('alias')));
 	}, [user])
 
-	function signout(){
+	const login = (username, password) => {
+		if (!username || !password) {
+			alert("Complete all fields")
+			return
+		}
+
+		user.auth(username, password, ({ err }) => {
+			err && alert(err)
+		});
+	}
+
+	function signout() {
 		user && user.leave()
 		username && setUserName('')
+		setTeam(undefined)
+		setChannel(undefined)
+	}
+
+	const signup = (username, password) => {
+		if (!username || !password) {
+			alert("Complete all fields")
+			return
+		}
+		user.create(username, password, ({ err }) => {
+			if (err) {
+				alert(err);
+			} else {
+				login(username, password);
+			}
+		});
 	}
 
 	return (
 
-		<UserContext.Provider value={{
-			db, user, username, signout, room, setRoom
-		}}>
+		<UserContext.Provider value={
+			{
+				db, 
+				user, 
+				username, 
+				signout, 
+				channel,
+				team,
+				setTeam,
+				setChannel, 
+				login, 
+				signup
+			}
+		}>
 			{props.children}
 		</UserContext.Provider>
 	)

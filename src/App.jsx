@@ -1,16 +1,9 @@
 import './fonts/Rubik/static/Rubik-Regular.ttf'
 import './App.css';
-import Chat from './chat'
-import UserContextProvider from './user';
+import UserContextProvider from './hooks/user';
 
 function App() {
-  return (
-    <div className="App">
-      <UserContextProvider>
-        <Chat />
-      </UserContextProvider>
-    </div>
-  );
+  return <p>HOME</p>
 }
 
 export default App;
