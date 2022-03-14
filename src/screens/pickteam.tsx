@@ -23,7 +23,7 @@ const PickTeam: () => JSX.Element = (): JSX.Element => {
 	}, [team])
 
 	return (
-		<div style={{ flex: 1, marginTop: 20 }}>
+		<div style={{ flex: 1, overflowY: 'scroll' }}>
 			<img src='HIVE_inline.png' width={200} style={{ margin: 50 }} />
 			<h2 className='pick-welcome'>Welcome to the hive, {name}</h2>
 			<p className='pick-welcome-sub'>Choose a team below to join its swarm</p>
@@ -52,6 +52,11 @@ const Team = ({ team }) => {
 	}, [])
 
 	const handlePress = () => {
+		let check = db.get(team.name)
+		if (check._?.ack){
+			alert("There was an error getting the team info")
+			return
+		}
 		setTeam(db.get(team.name))
 	}
 

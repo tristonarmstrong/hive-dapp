@@ -8,8 +8,13 @@ const Sidebar: () => JSX.Element = (): JSX.Element => {
   const [dms, setDms] = useState([])
 
   useEffect(() => {
-    team?.get('channels').map().once(c=> updateChannels(c.name))
+    let curr = null
+    team?.get('channels').map().once((c, i)=> updateChannels(i) )
   }, [])
+
+  useEffect(()=>{
+    if (channel != channels[0]) setChannel(channels[0])
+  }, [channels])
 
   const updateChannels = (new_channel: string) => {
     if (!new_channel) return;

@@ -17,7 +17,7 @@ html {
   margin: 0;
   padding: 0;
   height: 100vh;
-  overflow-y: scroll;
+  overflow-y: hidden;
   background-color: var(--secondary);
 }
 
@@ -546,7 +546,7 @@ html {
   min-height: 30px;
 }
 
-.message-card > view {
+.message-card > div {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -554,14 +554,14 @@ html {
   margin: 0 10px;
 }
 
-.message-card > view > h4 {
+.message-card > div > h4 {
   margin: 0 0 5px 0;
   font-size: 13px;
   font-weight: normal;
   color: gray;
 }
 
-.message-card > view > p {
+.message-card > div > p {
   margin: 0;
   background-color: white;
   padding: 12px;
@@ -575,12 +575,12 @@ html {
   flex-direction: row-reverse;
 }
 
-.me > view > p {
+.me > div > p {
   background-color: var(--primary);
   color: whitesmoke;
 }
 
-.me > view {
+.me > div {
   align-items: flex-end;
 }
 

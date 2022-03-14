@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../App.css'
 import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
@@ -11,10 +11,8 @@ function Main() {
   const { user, username, team, setTeam, channel, db, signout } = useUserContext()
   const navigate = useNavigate()
 
-
   if (!username || !team) {
-    signout()
-    navigate('/')
+    navigate('/pickteam')
     return <></>
   }
 

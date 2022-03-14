@@ -6,7 +6,7 @@ import generate_image_url from '../utils/generate_image_url'
 import MessageInput from './MessageInput'
 
 function MainBody(): JSX.Element {
-	const { channel, db, username } = useUserContext();
+	const { channel, db, username, team } = useUserContext();
 	const [newMessage, setNewMessage] = React.useState()
 	const [messages, setMessages] = React.useState([])
 
@@ -28,12 +28,15 @@ function MainBody(): JSX.Element {
 
 
 		// Get Messages
-		db.get(channel)
-			.map(match)
+		db.get(team._.soul)
+			.get('channels')
+			.get(channel)
+			.get('messages')
+			.map()
 			.once(parseMessage);
 	}
 
-	async function parseMessage(data: { what: any; }, id: any): Promise<void> {
+	async function parseMessage(data: { what: any; }, id: any, _msg: any, _ev: any): Promise<void> {
 		if (!data)
 			return;
 
@@ -61,10 +64,10 @@ function MainBody(): JSX.Element {
 						return (
 							<div className={`message-card ${message.who == username ? 'me' : ''}`}>
 								<img src={generate_image_url(message.who)} />
-								<view>
+								<div>
 									<h4>{message.who}</h4>
 									<p>{message.what}</p>
-								</view>
+								</div>
 							</div>
 						);
 					})}
@@ -75,7 +78,7 @@ function MainBody(): JSX.Element {
 			</div>
 			<div className='main-body-right'>
 				<div className='main-body-user-info'>
-
+					<p>Coming soon</p>
 				</div>
 
 				<div className='main-body-interaction-timeline'>

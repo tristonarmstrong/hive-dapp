@@ -10,11 +10,12 @@ const UserContextProvider = (props) => {
 	const [db, setDb] = useState()
 	const [user, setUser] = useState()
 	const [username, setUserName] = useState('')
-	const [channel, setChannel] = useState()
+	const [channel, _setChannel] = useState()
 	const [team, setTeam] = useState()
 
+
 	useEffect(() => {
-		setDb(GUN({
+		!db && setDb(GUN({
 			// peers: ['http://localhost:8000/gun'] // Put the relay node that you want here
 			peers: ['https://hive-relay.herokuapp.com/gun'] // Put the relay node that you want here
 		}))
@@ -64,6 +65,15 @@ const UserContextProvider = (props) => {
 				login(username, password);
 			}
 		});
+	}
+
+	const setChannel = (channel) => {
+		db.get(team._.soul)
+			.get('channels')
+			.get(channel)
+			.get('messages')
+			.off()
+		_setChannel(channel)
 	}
 
 	return (

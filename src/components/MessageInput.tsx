@@ -6,14 +6,14 @@ import { AiOutlineSend } from 'react-icons/ai'
 
 
 function MessageInput(): JSX.Element {
-	const { user, db, channel } = useUserContext()
+	const { user, db, channel, team } = useUserContext()
 	const [newMessage, setNewMessage] = React.useState<string>('')
 
 	const sendMessage: () => Promise<void> = async (): Promise<void> => {
 		const secret: any = await SEA.encrypt(newMessage, '#foo');
 		const message: any = user.get('all').set({ what: secret });
 		const index: string = new Date().toISOString();
-		db.get(channel).get(index).put(message);
+		db.get(team._.soul).get('channels').get(channel).get('messages').set(message)
 		setNewMessage('');
 	}
 

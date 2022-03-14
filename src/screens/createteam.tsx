@@ -11,6 +11,12 @@ const CreateTeam: () => JSX.Element = (): JSX.Element => {
 	const handlePress = () => {
 		if (!name) return;
 
+		let check = db.get(name).get('owner')
+		if (!check._.link){
+			alert("That swarm name is already taken!")
+			return
+		}
+		
 		let team = db.get(name).put({name: name, owner: user})
 		team.get('users').set(user)
 		user.get('teams').set(team)
