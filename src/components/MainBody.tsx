@@ -19,14 +19,6 @@ function MainBody(): JSX.Element {
 
 
 	function getMessages(): void {
-		var match = {
-			'.': {
-				'>': new Date(+new Date() - 1 * 1000 * 60 * 60 * 3).toISOString(), // find any indexed property larger ~3 hours ago
-			},
-			'-': 1, // filter in reverse
-		};
-
-
 		// Get Messages
 		db.get(team._.soul)
 			.get('channels')
@@ -37,11 +29,12 @@ function MainBody(): JSX.Element {
 	}
 
 	async function parseMessage(data: { what: any; }, id: any, _msg: any, _ev: any): Promise<void> {
+		console.table(data)
 		if (!data)
 			return;
 
 		// Key for end-to-end encryption
-		const key: "#foo" = '#foo'; // to be update to something more realistic and dynamic
+		const key: string = `${channel}-${team}`; // to be update to something more realistic and dynamic
 
 		var message: { who: any, what: string, when: string } = {
 			// transform the data
@@ -50,7 +43,7 @@ function MainBody(): JSX.Element {
 			when: GUN.state.is(data, 'what'), // get the internal timestamp for the what property.
 		};
 
-		if (!message.what)
+		if (!message.what || message.what == 'undefined')
 			return;
 
 		setMessages((prevMessages: any[]): any[] => [...new Set([...prevMessages.slice(-100), message])].sort((a: any, b: any): number => a.when - b.when));
