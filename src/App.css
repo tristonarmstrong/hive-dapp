@@ -3,7 +3,24 @@
   --primary_dark: #3655b3;
   --secondary: #d3deff;
   --secondary_dark: #a6bcff;
-  --complimentary: #ff5151;
+  --complimentary: #bb3636;
+
+  /*dark reader styles*/
+  --darkreader-bg--primary: #0035f8;
+  --darkreader-bg--primary_dark: #3a63df;
+  --darkreader-text--primary_dark: #a5f3ff;
+  --darkreader-bg--secondary: #2f3437;
+  --darkreader-border--secondary: #0023b1;
+  --darkreader-bg--secondary_dark: #444b4e;
+  --darkreader-border--secondary_dark: #0028c8;
+  --darkreader-bg--complimentary: #f30000;
+  --darkreader-text--complimentary: #ff7b7b;
+  --darkreader-border--complimentary: #f10000;
+
+  --darkreader-neutral-background: #131618;
+  --darkreader-neutral-text: #ffffff;
+  --darkreader-selection-background: #0072ff;
+  --darkreader-selection-text: #ffffff;
 }
 
 @font-face {
@@ -12,19 +29,35 @@
     url("./fonts/Rubik/static/Rubik-Regular.ttf") format("truetype");
 }
 
+input:autofill, textarea:autofill, select:autofill {
+  background-color: var(--primary) !important;
+  color: #ffffff !important;
+}
+
+*:hover {
+  transition: .2s;
+}
 
 html {
   margin: 0;
   padding: 0;
-  height: 100vh;
   overflow-y: hidden;
-  background-color: var(--secondary);
+  color-scheme: dark;
+  background-color: #1b1e20;
+}
+
+html, body {
+  border-color: #b1a48e;
+  color: #ffffff;
+}
+
+.App, html {
+  height: 100vh;
+  background-color: var(--darkreader-bg--secondary);
 }
 
 .App {
   text-align: center;
-  background-color: var(--secondary);
-  height: 100vh;
   font-family: Rubik;
   display: flex;
 }
@@ -37,13 +70,13 @@ html {
 
 
 .login-box-container {
-  background-color: white;
+  background-color: rgb(27, 30, 32);
+  box-shadow: rgba(0, 0, 0, 0.18) 0px 0px 20px 0px;
   height: 100%;
   flex: 2.5 1;
   justify-content: center;
   align-items: center;
   display: flex;
-  box-shadow: 0px 0px 20px 0 #0000002e;
 }
 
 .login-header {
@@ -61,7 +94,7 @@ html {
 
 .login-header > p {
   font-size: 14px;
-  color: gray;
+  color: rgb(238, 223, 200);
   margin-top: 5px;
 }
 
@@ -69,7 +102,8 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  box-shadow: 0 5px 10px 0px #00000030;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 5px 10px 0px;
+  background-color: var(--darkreader-bg--secondary);  
   border-radius: 10px;
   padding: 20px;
 }
@@ -93,7 +127,8 @@ html {
   padding: 10px;
   border-radius: 4px;
   background-color: var(--primary);
-  color: white;
+  border-color: currentcolor;
+  color: rgb(255, 255, 255);
   font-weight: bold;
 }
 
@@ -108,8 +143,7 @@ html {
 }
 
 .login-title {
-  height: 30vw;
-  filter: drop-shadow(0px 5px 3px #2222223d);
+  height: 20vw;
 }
 
 .chat-header {
@@ -130,32 +164,33 @@ html {
 .signout-button {
   border: 0;
   border-radius: 4px;
-  background-color: var(--secondary);
-  color: #0009;
   font-weight: bold;
   font-size: 12px;
   padding: 5px;
   cursor: pointer;
+  background-color: var(--darkreader-bg--secondary);
+  border-color: currentcolor;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .signout-button:hover {
   cursor: pointer;
-  background-color: var(--secondary_dark);
+  background-color: var(--darkreader-bg--secondary_dark);
 }
 
 .sidebar-container {
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: rgb(27, 30, 32);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px 2px;
   width: 260px;
   overflow-y: scroll;
   scrollbar-width: thin;
-  box-shadow: 0px 0px 10px 2px #0000001a;
   z-index: 2;
 }
 
 .main-container {
-  background-color: #f4f6fc;
+  background-color: rgb(33, 37, 38);
   flex: 4 1;
   display: flex;
   flex-direction: column;
@@ -176,12 +211,12 @@ html {
 }
 
 .main-body-right {
-  background-color: white;
   flex: 1;
   min-width: 0px;
   max-width: 250px;
-  box-shadow: 0px 0px 10px 2px #0000001a;
   z-index: 0;
+  background-color: rgb(27, 30, 32);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px 2px;
 }
 
 .main-body-chat {
@@ -191,13 +226,13 @@ html {
 }
 
 .main-body-input {
-  background-color: white;
   min-height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: sticky;
   bottom: 0;
+  background-color: rgb(27, 30, 32);
 }
 
 .main-body-left > form {
@@ -206,36 +241,38 @@ html {
 
 .main-body-input > input {
   width: 90%;
-  background-color: #f4f6fc;
   border: 0;
   padding: 8px 7px;
   border-radius: 4px;
   font-size: 14px;
   height: 28px;
   margin-right: 5px;
+  background-color: rgb(33, 37, 38);
+  border-color: currentcolor;
 }
 
 .main-body-input > button {
-  background-color: var(--secondary);
   border: 0;
   border-radius: 4px;
   padding: 5px;
   width: 80px;
   height: 40px;
+  background-color: var(--darkreader-bg--secondary);
+  border-color: currentcolor;
 }
 
 .main-body-input > button:hover {
-  background-color: var(--secondary_dark);
+  background-color: var(--darkreader-bg--secondary_dark);
   cursor: pointer;
 }
 
 .main-navbar {
   width: 100%;
   height: 50px;
-  background-color: white;
+  background-color: rgb(27, 30, 32);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px 2px;
   display: flex;
   justify-content: space-between;
-  box-shadow: 0px 0px 10px 2px #0000001a;
   z-index: 1;
 }
 
@@ -286,7 +323,8 @@ html {
   display: flex;
   text-align: left;
   padding: 20px 0 20px;
-  outline: 1px solid #00000012;
+  outline: 1px solid;
+  outline-color: rgba(218, 202, 177, 0.07);
   justify-content: flex-start;
 }
 
@@ -341,7 +379,7 @@ html {
 .sidebar-channels > details > summary {
   margin: 20px 0 0 0;
   font-weight: normal;
-  color: gray;
+  color: rgb(238, 223, 200);
   font-size: 18px;
 }
 
@@ -358,7 +396,7 @@ html {
 }
 
 .sidebar-channels > details > div > p:hover {
-  background-color: var(--secondary);
+  background-color: var(--darkreader-bg--secondary);
   cursor: pointer;
   border-radius: 4px;
 }
@@ -374,7 +412,7 @@ html {
 .sidebar-dms > details > summary {
   margin: 20px 0 0 0;
   font-weight: normal;
-  color: gray;
+  color: rgb(238, 223, 200);
   font-size: 18px;
 }
 
@@ -479,18 +517,19 @@ html {
 
 .form-input > input {
   margin: 10px;
-  border: 1px solid #e6e6e6;
+  border: 1px solid;
   padding: 5px;
   border-radius: 4px;
-  background-color: #f4f4f4;
   margin-left: 0;
   width: 95%;
+  background-color: rgb(37, 42, 43);
+  border-color: rgb(37, 42, 43);
 }
 
 .form-input > label {
   font-weight: lighter;
   font-size: 14px;
-  color: gray;
+  color: rgb(238, 223, 200);
   text-align: left;
 }
 
@@ -537,13 +576,13 @@ html {
 }
 
 .message-card > img {
-  background-color: gray;
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  box-shadow: 0px 5px 10px -5px #0003;
   min-width: 30px;
   min-height: 30px;
+  background-color: rgb(146, 159, 165);
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 10px -5px;
 }
 
 .message-card > div {
@@ -558,17 +597,18 @@ html {
   margin: 0 0 5px 0;
   font-size: 13px;
   font-weight: normal;
-  color: gray;
+  color: rgb(238, 223, 200);
 }
 
 .message-card > div > p {
   margin: 0;
-  background-color: white;
   padding: 12px;
   border-radius: 10px;
   box-shadow: 0px 5px 10px -5px #0003;
   font-size: 16px;
   text-align: left;
+  background-color: var(--darkreader-bg--primary);
+  color: rgb(255, 255, 255);
 }
 
 .me {
@@ -585,22 +625,24 @@ html {
 }
 
 .selected {
-  background-color: var(--secondary);
   border-radius: 4px;
 }
 
+.creator-button, .selected {
+  background-color: var(--darkreader-bg--secondary);
+}
+
 .creator-button {
-  background-color: var(--secondary);
   border: 0;
   border-radius: 4px;
   padding: 5px;
-  color: var(--primary_dark);
+  color: var(--secondary);
   font-weight: bold;
   cursor: pointer;
 }
 
 .creator-button:hover {
-  background-color: var(--secondary_dark);
+  background-color: var(--darkreader-bg--secondary_dark);
 }
 
 
