@@ -12,6 +12,7 @@ const UserContextProvider = (props) => {
 	const [username, setUserName] = useState('')
 	const [channel, _setChannel] = useState()
 	const [team, setTeam] = useState()
+	const [chan_subs, setChan_subs] = useState([])
 
 
 	useEffect(() => {
@@ -30,6 +31,7 @@ const UserContextProvider = (props) => {
 	useEffect(() => {
 		if (!user) return;
 
+		console.log("USER: ", user)
 		user.get('alias').on(v => setUserName(v));
 
 		db.on('auth', async (event) => setUserName(await user.get('alias')));
@@ -72,6 +74,7 @@ const UserContextProvider = (props) => {
 			.get('channels')
 			.get(channel)
 			.get('messages')
+			.map()
 			.off()
 		_setChannel(channel)
 	}
@@ -89,7 +92,8 @@ const UserContextProvider = (props) => {
 				setTeam,
 				setChannel, 
 				login, 
-				signup
+				signup,
+				chan_subs, setChan_subs
 			}
 		}>
 			{props.children}

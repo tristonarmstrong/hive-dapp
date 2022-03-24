@@ -6,9 +6,10 @@ import generate_image_url from '../utils/generate_image_url'
 import MessageInput from './MessageInput'
 
 function MainBody(): JSX.Element {
-	const { channel, db, username, team } = useUserContext();
+	const { channel, db, username, team, chan_subs, setChan_subs } = useUserContext();
 	const [newMessage, setNewMessage] = React.useState()
 	const [messages, setMessages] = React.useState([])
+	const messagesEnd = React.useRef(null)
 
 
 
@@ -17,19 +18,35 @@ function MainBody(): JSX.Element {
 		getMessages();
 	}, [channel]);
 
+	React.useEffect(()=>{
+		messagesEnd.current && messagesEnd.current?.scrollIntoView();
+	}, [messages])
+
+
 
 	function getMessages(): void {
+		if (chan_subs.includes(channel)) {
+			db.get(team._.soul)
+				.get('channels')
+				.get(channel)
+				.get('messages')
+				.once()
+				.map()
+				.once(parseMessage)
+			return
+		}
+
 		// Get Messages
 		db.get(team._.soul)
 			.get('channels')
 			.get(channel)
 			.get('messages')
 			.map()
-			.once(parseMessage);
+			.once(parseMessage)
+		setChan_subs([...chan_subs, channel])
 	}
 
 	async function parseMessage(data: { what: any; }, id: any, _msg: any, _ev: any): Promise<void> {
-		console.table(data)
 		if (!data)
 			return;
 
@@ -53,9 +70,9 @@ function MainBody(): JSX.Element {
 		<div className='main-body'>
 			<div className='main-body-left'>
 				<div className='main-body-chat'>
-					{messages?.map(message => {
+					{messages?.map((message, i) => {
 						return (
-							<div className={`message-card ${message.who == username ? 'me' : ''}`}>
+							<div key={`msg-${i}`} className={`message-card ${message.who == username ? 'me' : ''}`}>
 								<img src={generate_image_url(message.who)} />
 								<div>
 									<h4>{message.who}</h4>
@@ -64,6 +81,7 @@ function MainBody(): JSX.Element {
 							</div>
 						);
 					})}
+					<div ref={messagesEnd}> </div>
 				</div>
 
 				<MessageInput />
