@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useUserContext } from '../hooks/user'
 import '../styles/pick_team_styles.css'
 import { useNavigate } from 'react-router-dom'
+import TeamCard from '../components/TeamCard'
 
 const PickTeam: () => JSX.Element = (): JSX.Element => {
 	const { user, db, team } = useUserContext()
@@ -30,48 +31,24 @@ const PickTeam: () => JSX.Element = (): JSX.Element => {
 			<div className='pick-container'>
 				<p className='pick-title'>Swarms for {name}</p>
 				<div className='pick-teams_list'>
-					{teams.map((team: any): JSX.Element => <Team team={team} />)}
+					{teams.map((team: any, i: number): JSX.Element => <TeamCard key={`teamcard-${i}`} team={team} />)}
 					{!teams.length && <h4>There are no swarms created yet - Try creating one!</h4>}
 				</div>
 			</div>
 
 			<div className='pick-container pick-bottom'>
-				<h4>Want to use Hive with a different Swarm?</h4>
-				<button onClick={() => navigate('../createteam')}>Create new Swarm</button>
-			</div>
-		</div>
-	)
-}
-
-const Team = ({ team }) => {
-	const { db, setTeam } = useUserContext()
-	const [users, setUsers] = React.useState(0)
-
-	useEffect(() => {
-		db.get(team.name).get('users').map().once(_ => setUsers(users + 1))
-	}, [])
-
-	const handlePress = () => {
-		let check = db.get(team.name)
-		if (check._?.ack){
-			alert("There was an error getting the team info")
-			return
-		}
-		setTeam(db.get(team.name))
-	}
-
-	return (
-		<div className='team_item'>
-			<div className='left'>
-				<img src='/favicon.png' width={50} height={50} />
 				<div>
-					<h3>{team.name}</h3>
-					<p>{users} Users</p>
+					<h4>Want to use Hive with a different Swarm?</h4>
+					<div>
+						<button onClick={() => navigate('../createteam')}>Create new Swarm</button>
+						<button onClick={() => navigate('../join')}>Join a Swarm</button>
+					</div>
 				</div>
 			</div>
-			<button className='right' onClick={handlePress}>Swarm</button>
 		</div>
 	)
 }
+
+
 
 export default PickTeam

@@ -2,21 +2,32 @@ import GUN from 'gun';
 import 'gun/sea';
 import 'gun/axe';
 import React, { useContext, useEffect, useState } from 'react';
+import getGunOnce from '../utils/getGunOnce'
 
 const UserContext = React.createContext({});
 export const useUserContext = () => useContext(UserContext)
 
 const UserContextProvider = (props) => {
 	const [db, setDb] = useState()
+
+	// user stuff
 	const [user, setUser] = useState()
 	const [username, setUserName] = useState('')
+
+	// channels
 	const [channel, _setChannel] = useState()
-	const [team, setTeam] = useState()
+	const [channels, setChannels] = useState([])
 	const [chan_subs, setChan_subs] = useState([])
+
+	// team stuff
+	const [team, setTeam] = useState()
+
 
 
 	useEffect(() => {
 		!db && setDb(GUN({
+			web: 'web',
+			file: 'db/data.json',
 			// peers: ['http://localhost:8000/gun'] // Put the relay node that you want here
 			peers: ['https://hive-relay.herokuapp.com/gun'] // Put the relay node that you want here
 		}))
@@ -24,28 +35,18 @@ const UserContextProvider = (props) => {
 	}, [])
 
 	useEffect(() => {
-		if (!db) return;
-		setUser(db.user().recall({ sessionStorage: true }))
+		db && setUser(db.user().recall({ sessionStorage: true }))
 	}, [db])
 
 	useEffect(() => {
 		if (!user) return;
-
-		console.log("USER: ", user)
-		user.get('alias').on(v => setUserName(v));
-
-		db.on('auth', async (event) => setUserName(await user.get('alias')));
+		user.get('alias').once(val => setUserName(val));
+		db.on('auth', async (event) => user.get('alias').once(val => setUserName(val)));
 	}, [user])
 
 	const login = (username, password) => {
-		if (!username || !password) {
-			alert("Complete all fields")
-			return
-		}
-
-		user.auth(username, password, ({ err }) => {
-			err && alert(err)
-		});
+		if (!username || !password) return alert("Complete all fields");
+		user.auth(username, password, ({ err }) => err && alert(err));
 	}
 
 	function signout() {
@@ -56,16 +57,11 @@ const UserContextProvider = (props) => {
 	}
 
 	const signup = (username, password) => {
-		if (!username || !password) {
-			alert("Complete all fields")
-			return
-		}
+		if (!username || !password) return alert("Complete all fields");
+
 		user.create(username, password, ({ err }) => {
-			if (err) {
-				alert(err);
-			} else {
-				login(username, password);
-			}
+			if (err) return alert(err);
+			login(username, password);
 		});
 	}
 

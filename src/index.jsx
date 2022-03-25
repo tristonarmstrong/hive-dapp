@@ -10,6 +10,7 @@ import Main from './screens/main';
 import PickTeam from './screens/pickteam'
 import CreateTeam from './screens/createteam'
 import UserContextProvider from './hooks/user';
+import JoinTeam from './screens/jointeam'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -18,9 +19,10 @@ ReactDOM.render(
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<Login />} />
-            <Route path='pickteam' element={<PickTeam/>} />
-            <Route path='createteam' element={<CreateTeam/>}/>
-            <Route path='main' element={<Main/>} />
+            <Route path='pickteam' element={<PickTeam />} />
+            <Route path='createteam' element={<CreateTeam />} />
+            <Route path='main' element={<Main />} />
+            <Route path='join' element={<JoinTeam />} />
 
             <Route
               path="*"

@@ -4,6 +4,7 @@ import GUN from 'gun'
 import SEA from 'gun/sea'
 import generate_image_url from '../utils/generate_image_url'
 import MessageInput from './MessageInput'
+import getGunOnce from '../utils/getGunOnce'
 
 function MainBody(): JSX.Element {
 	const { channel, db, username, team, chan_subs, setChan_subs } = useUserContext();
@@ -18,31 +19,29 @@ function MainBody(): JSX.Element {
 		getMessages();
 	}, [channel]);
 
-	React.useEffect(()=>{
+	React.useEffect(() => {
 		messagesEnd.current && messagesEnd.current?.scrollIntoView();
 	}, [messages])
 
 
 
-	function getMessages(): void {
+	async function getMessages(): Promise<void> {
+		let { data } = await getGunOnce(team.get('name'))
+
+		if (!data){
+			return alert("There was an error, reload the page and try again")
+		}
+
+		let soul = data
+		let messages = db.get(soul).get('channels').get(channel).get('messages')
+
 		if (chan_subs.includes(channel)) {
-			db.get(team._.soul)
-				.get('channels')
-				.get(channel)
-				.get('messages')
-				.once()
-				.map()
-				.once(parseMessage)
+			messages.once().map().once(parseMessage)
 			return
 		}
 
 		// Get Messages
-		db.get(team._.soul)
-			.get('channels')
-			.get(channel)
-			.get('messages')
-			.map()
-			.once(parseMessage)
+		messages.map().once(parseMessage)
 		setChan_subs([...chan_subs, channel])
 	}
 
@@ -73,9 +72,9 @@ function MainBody(): JSX.Element {
 					{messages?.map((message, i) => {
 						return (
 							<div key={`msg-${i}`} className={`message-card ${message.who == username ? 'me' : ''}`}>
-								<img src={generate_image_url(message.who)} />
+								{message.who != messages[i-1]?.who ? <img src={generate_image_url(message.who)} /> : <div className='no-image-placeholder'/>}
 								<div>
-									<h4>{message.who}</h4>
+									{message.who != messages[i-1]?.who && <h4>{message.who}</h4>}
 									<p>{message.what}</p>
 								</div>
 							</div>

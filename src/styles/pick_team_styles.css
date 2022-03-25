@@ -86,25 +86,36 @@
   background-color: var(--primary_dark);
 }
 
-.pick-bottom > h4 {
-  margin: 0;
-  font-size: 13px;
-  font-weight: bold;
-  color: rgb(255, 255, 255);
+.pick-bottom > div {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 5px;
+  flex-direction: column;
 }
 
-.pick-bottom > button {
-  background-color: var(--complimentary);
-  color: var(--darkreader-neutral-text);
-  border: 1px solid var(--complimentary);
+.pick-bottom > div > h4 {
+  margin: 10px;
+}
 
+.pick-bottom > div > div {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.pick-bottom > div > div > button {
+  flex: 1;
+  background-color: var(--complimentary);
+  border: 0;
+  padding: 10px 0;
   border-radius: 4px;
-  padding: 10px;
   font-weight: bold;
+  margin-right: 5px;
   cursor: pointer;
 }
 
-.pick-bottom > button:hover{
+.pick-bottom > div > div > button:hover{
 	background-color: darkred;
   border-color: darkred;
   transition: .2s;
