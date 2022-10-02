@@ -32,7 +32,7 @@ const UserContextProvider = (props) => {
 			peers: ['https://hive-relay.herokuapp.com/gun'] // Put the relay node that you want here
 		}))
 		setUserName('')
-	}, [])
+	}, [db])
 
 	useEffect(() => {
 		db && setUser(db.user().recall({ sessionStorage: true }))
@@ -42,7 +42,7 @@ const UserContextProvider = (props) => {
 		if (!user) return;
 		user.get('alias').once(val => setUserName(val));
 		db.on('auth', async (event) => user.get('alias').once(val => setUserName(val)));
-	}, [user])
+	}, [db, user])
 
 	const login = (username, password) => {
 		if (!username || !password) return alert("Complete all fields");

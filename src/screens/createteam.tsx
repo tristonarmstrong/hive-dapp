@@ -14,7 +14,7 @@ const CreateTeam: () => JSX.Element = (): JSX.Element => {
 
 		let {node, data} = await getGunOnce(db.get(name).get('owner'))
 		let check = db.get(name).get('owner')
-		if (!data){
+		if (data){
 			return alert("That swarm name is already taken!")
 		}
 		
